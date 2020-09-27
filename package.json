@@ -1,0 +1,20 @@
+{
+	"name": "makedown",
+	"version": "1.0.0",
+	"description": "Makedown is a simple automatic markdown file generator.",
+	"main": "makedown.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dennisprudlo/makedown.git"
+	},
+	"keywords": ["markdown", "make", "down", "generator"],
+	"author": "Dennis Prudlo <mail@dennisprudlo.com> (https://dennisprudlo.com)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/dennisprudlo/makedown/issues"
+	},
+	"homepage": "https://github.com/dennisprudlo/makedown#readme"
+}
