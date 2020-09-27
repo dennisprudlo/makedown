@@ -1,13 +1,17 @@
 class MarkdownHeadlineComponent {
 
-	constructor (input, indentation = 1) {
-		this.input			= input;
-		this.indentation	= Math.min(6, Math.max(1, indentation));
-		this.isInline		= false;
+	constructor (indentation = 1, ...components) {
+		if (isNaN(arguments[0]) || !Number.isInteger(arguments[0])) {
+			this.indentation	= 1
+			this.components		= [indentation].concat(components)
+		} else {
+			this.indentation	= Math.min(6, Math.max(1, indentation));
+			this.components		= components
+		}
 	}
 
-	markdown () {
-		return `${ '#'.repeat(this.indentation) } ${ this.isInline ? this.input : this.input + '\n' }`;
+	markdown (makedown) {
+		return `${ '#'.repeat(this.indentation) } ${ makedown.resolve(this.components) }\n`;
 	}
 }
 
