@@ -1,12 +1,12 @@
-class MarkdownParagraphComponent {
+class MarkdownNewlineComponent {
 
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {array}    components The list of the child components
+	 * @param  {number}    lines The amount of newlines to create
 	 */
-	constructor (...components) {
-		this.components = components
+	constructor (text) {
+		this.text = text
 	}
 
 	/**
@@ -16,8 +16,12 @@ class MarkdownParagraphComponent {
 	 * @return {string}            The resolved markdown string
 	 */
 	resolve (makedown) {
-		return `\n\n${ makedown.resolve(this.components) }`;
+		return this.text
+			.replace(/\*/g, '\\*')
+			.replace(/\_/g, '\\_')
+			.replace(/\>/g, '\\>')
+			.replace(/\`/g, '\\`')
 	}
 }
 
-module.exports = MarkdownParagraphComponent;
+module.exports = MarkdownNewlineComponent;

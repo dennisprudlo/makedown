@@ -1,4 +1,4 @@
-class MarkdownParagraphComponent {
+class MarkdownQuotationComponent {
 
 	/**
 	 * Constructs the markdown component
@@ -16,8 +16,8 @@ class MarkdownParagraphComponent {
 	 * @return {string}            The resolved markdown string
 	 */
 	resolve (makedown) {
-		return `\n\n${ makedown.resolve(this.components) }`;
+		return `\n> ${ makedown.resolve(this.components) }`;
 	}
 }
 
-module.exports = MarkdownParagraphComponent;
+module.exports = MarkdownQuotationComponent;

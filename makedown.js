@@ -7,6 +7,11 @@ const components = {
 	italic:		require('./components/italic'),
 	strike:		require('./components/strikethrough'),
 	emph:		require('./components/emphasis'),
+	quote:		require('./components/quotation'),
+	code:		require('./components/code'),
+	newline:	require('./components/newline'),
+	link:		require('./components/link'),
+	text:		require('./components/text'),
 }
 
 class Makedown {
@@ -67,7 +72,7 @@ class Makedown {
 	 * @return {string}           The resolved markdown string
 	 */
 	resolve (components) {
-		return components.map(component => {
+		const markdownComponents = components.map(component => {
 
 			//
 			// Plain strings and numbers are resolved as they are
@@ -82,7 +87,23 @@ class Makedown {
 			//
 			// Undefined components are skipped
 			return '';
-		}).join(this.autoSpaces ? ' ' : '');
+		});
+
+		var outputString = ''
+
+		var lastHadNewline = null;
+		markdownComponents.forEach(item => {
+
+			if (lastHadNewline != null && !lastHadNewline) {
+				outputString += this.options.autoSpaces ? ' ' : '';
+			}
+
+			outputString += item;
+
+			lastHadNewline = item.endsWith('\n');
+		});
+
+		return outputString;
 	}
 
 	/**
@@ -104,7 +125,7 @@ class Makedown {
 
 		//
 		// Write the contents
-		const content = this.resolve(this.components);
+		const content = this.resolve(this.components).trim();
 		fs.writeFileSync(filename, content, result => {
 			console.log(`${ filename } created.`);
 		});
