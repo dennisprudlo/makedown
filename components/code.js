@@ -22,7 +22,7 @@ class MarkdownCodeComponent {
 	 * @return {string}            The resolved markdown string
 	 */
 	resolve (makedown) {
-		if (this.code.includes('\n')) {
+		if (this.code.includes('\n') || this.language !== null) {
 			return `\n\`\`\`${ this.language !== null ? this.language : '' }\n${ this.code }\n\`\`\``;
 		} else {
 			return `\`${ this.code }\``;

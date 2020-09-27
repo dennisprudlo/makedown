@@ -23,7 +23,7 @@ class MarkdownHeadlineComponent {
 	 * @return {string}            The resolved markdown string
 	 */
 	resolve (makedown) {
-		return `\n${ '#'.repeat(this.indentation) } ${ makedown.resolve(this.components) }`;
+		return `\n\n${ '#'.repeat(this.indentation) } ${ makedown.resolve(this.components) }`;
 	}
 }
 
