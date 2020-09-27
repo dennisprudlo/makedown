@@ -1,4 +1,4 @@
-class MarkdownParagraphComponent {
+class MarkdownEmphasisComponent {
 
 	/**
 	 * Constructs the markdown component
@@ -16,8 +16,8 @@ class MarkdownParagraphComponent {
 	 * @return {string}            The resolved markdown string
 	 */
 	resolve (makedown) {
-		return `${ makedown.resolve(this.components) }\n\n`;
+		return `***${ makedown.resolve(this.components) }***`;
 	}
 }
 
-module.exports = MarkdownParagraphComponent;
+module.exports = MarkdownEmphasisComponent;
