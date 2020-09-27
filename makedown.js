@@ -1,17 +1,18 @@
 const fs = require('fs')
 
 const components = {
-	headline:	require('./components/headline'),
-	paragraph:	require('./components/paragraph'),
-	bold:		require('./components/bold'),
-	italic:		require('./components/italic'),
-	strike:		require('./components/strikethrough'),
-	emph:		require('./components/emphasis'),
-	quote:		require('./components/quotation'),
-	code:		require('./components/code'),
-	newline:	require('./components/newline'),
-	link:		require('./components/link'),
-	text:		require('./components/text'),
+	headline:			require('./components/headline'),
+	paragraph:			require('./components/paragraph'),
+	bold:				require('./components/bold'),
+	italic:				require('./components/italic'),
+	strike:				require('./components/strikethrough'),
+	emph:				require('./components/emphasis'),
+	quote:				require('./components/quotation'),
+	code:				require('./components/code'),
+	newline:			require('./components/newline'),
+	link:				require('./components/link'),
+	text:				require('./components/text'),
+	tableOfContents:	require('./components/table-of-contents'),
 }
 
 class Makedown {
@@ -36,6 +37,12 @@ class Makedown {
 			 * @type {Boolean}
 			 */
 			autoSpaces: true,
+
+			/**
+			 * Whether to print the generated file in the console
+			 * @type {Boolean}
+			 */
+			printResults: false,
 		};
 	}
 
@@ -129,6 +136,10 @@ class Makedown {
 		fs.writeFileSync(filename, content, result => {
 			console.log(`${ filename } created.`);
 		});
+
+		if (this.options.printResults) {
+			console.log(content);
+		}
 	}
 }
 
