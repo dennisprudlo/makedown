@@ -12,6 +12,7 @@ const markdownComponents = {
 	newline:			require('./components/newline'),
 	link:				require('./components/link'),
 	text:				require('./components/text'),
+	list:				require('./components/list'),
 	tableOfContents:	require('./components/table-of-contents'),
 }
 

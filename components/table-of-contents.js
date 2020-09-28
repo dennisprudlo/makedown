@@ -12,6 +12,7 @@ class MarkdownTableOfContentsComponent {
 			title:					'Table of Contents',
 			include:				[2, 3, 4, 5, 6],
 			collectFromBeginning:	false,
+			type:					'unordered'
 		};
 
 		Object.assign(this.options, options);
@@ -60,13 +61,13 @@ class MarkdownTableOfContentsComponent {
 			return entry;
 		});
 
-		var indentationSpaces = ['', '', '  ', '    ', '      ', '      ', '      ']
+		var prefix = this.options.type == 'ordered' ? '1. ' : '- ';
 
 		//
 		// Create the table of contents string
 		const tocString = tableOfContents.map(entry => {
 			const href = `#${ entry.content.toLowerCase().replace(/\ /g, '-') }`
-			return `${ indentationSpaces[entry.indentation] }- [${ entry.content }](${ href })`;
+			return `${ ' '.repeat((entry.indentation - 1) * prefix.length) }${ prefix }[${ entry.content }](${ href })`;
 		}).join('\n');
 
 		//
