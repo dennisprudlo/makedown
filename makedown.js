@@ -15,6 +15,7 @@ const markdownComponents = {
 	list:				require('./components/list'),
 	table:				require('./components/table'),
 	tableOfContents:	require('./components/table-of-contents'),
+	each:				require('./components/each'),
 }
 
 class Makedown {
@@ -65,7 +66,37 @@ class Makedown {
 	 * @return {Makedown}          A makedown instance to create a markdown file
 	 */
 	make (...components) {
-		return new Makedown(...components);
+		const constructed = new Makedown(...components);
+
+		//
+		// Resolve subsets
+		constructed.components.forEach(component => {
+			if (!(component instanceof markdownComponents.each)) return;
+
+			//
+			// Resolved each component.
+			// It need to be reversed because it is added backwards to the main components array
+			var resolvedComponents = component.resolve().reverse();
+
+			//
+			// Determine the index of the each component
+			var componentIndex = null;
+			for (var compIndex = 0; compIndex < constructed.components.length; compIndex++) {
+				if (component == constructed.components[compIndex]) {
+					componentIndex = compIndex;
+					delete constructed.components[compIndex];
+					break;
+				}
+			}
+
+			//
+			// Append the resolved components at the right index
+			resolvedComponents.forEach(resolvedComponent => {
+				constructed.components.splice(componentIndex, 0, resolvedComponent);
+			})
+		});
+
+		return constructed;
 	}
 
 	/**
@@ -132,4 +163,5 @@ for (title in markdownComponents) {
 	makedown.extend(title, markdownComponents[title]);
 }
 
-module.exports = makedown;
+module.exports			= makedown;
+module.exports.class	= Makedown;
