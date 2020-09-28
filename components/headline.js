@@ -3,27 +3,35 @@ class MarkdownHeadlineComponent {
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {number}   indentation The headline indentation level (1-6)
-	 * @param  {array}    components  The list of the child components
+	 * @param  {string}        content  The content to use for the headline
+	 * @param  {object|number} options  The headline options. If set to an integer its used as the indentation option
 	 */
-	constructor (indentation = 1, ...components) {
-		if (isNaN(arguments[0]) || !Number.isInteger(arguments[0])) {
-			this.indentation	= 1
-			this.components		= [indentation].concat(components)
-		} else {
-			this.indentation	= Math.min(6, Math.max(1, indentation));
-			this.components		= components
+	constructor (content, options) {
+		this.content = content;
+		this.options = {
+			indentation: 1
+		};
+
+		if (!isNaN(options) && Number.isInteger(options)) {
+
+			//
+			// map the indentation level between 1 and 6
+			this.options.indentation = Math.min(6, Math.max(1, options));
+		} else if (typeof options === 'object') {
+
+			//
+			// Merge the passed options with the default options
+			Object.assign(this.options, options);
 		}
 	}
 
 	/**
-	 * Resolves the component into a markdown string
-	 * @method resolve
-	 * @param  {Makedown} makedown A reference to the makedown instance
-	 * @return {string}            The resolved markdown string
+	 * Generates the markdown string of the component
+	 * @method toString
+	 * @return {string} The generated markdown string
 	 */
-	resolve (makedown) {
-		return `\n\n${ '#'.repeat(this.indentation) } ${ makedown.resolve(this.components) }`;
+	toString () {
+		return `${ '#'.repeat(this.options.indentation) } ${ this.content }\n`;
 	}
 }
 

@@ -3,20 +3,28 @@ class MarkdownParagraphComponent {
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {array}    components The list of the child components
+	 * @param  {string} content  The content to use for the paragraph
+	 * @param  {object} options  The paragraphs options
 	 */
-	constructor (...components) {
-		this.components = components
+	constructor (content, options = {}) {
+		this.content = content.trim().replace(/^(\s)+/gm, '');
+		this.options = {
+			spaceBefore:	false,
+			spaceAfter:		true,
+		};
+
+		//
+		// Merge the passed options with the default options
+		Object.assign(this.options, options);
 	}
 
 	/**
-	 * Resolves the component into a markdown string
-	 * @method resolve
-	 * @param  {Makedown} makedown A reference to the makedown instance
-	 * @return {string}            The resolved markdown string
+	 * Generates the markdown string of the component
+	 * @method toString
+	 * @return {string} The generated markdown string
 	 */
-	resolve (makedown) {
-		return `\n\n${ makedown.resolve(this.components) }`;
+	toString () {
+		return `${ this.options.spaceBefore ? '\n\n' : '' }${ this.content }${ this.options.spaceAfter ? '\n\n' : '' }`;
 	}
 }
 

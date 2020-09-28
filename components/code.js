@@ -3,27 +3,53 @@ class MarkdownCodeComponent {
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {string}    code The source code
+	 * @param  {string}        code    The source code
+	 * @param  {object|string} options The code options. If set to a string its used as the language option
 	 */
-	constructor (language, code) {
-		if (code === undefined) {
-			this.language	= null;
-			this.code		= language
-		} else {
-			this.language	= typeof language === 'string' ? language : null
-			this.code		= code
+	constructor (code, options = {}) {
+		this.code		= code;
+		this.options	= {
+			/**
+			 * The language identifier to use for syntax highlighting
+			 * @type {string|null}
+			 */
+			language:	null,
+
+			/**
+			 * Forces the display of either an inline or a block component
+			 * Possible values: null, "inline", "block"
+			 * @type {string|null}
+			 */
+			force:		null,
+		}
+
+		if (typeof options === 'string') {
+
+			//
+			// Set the specified code language
+			this.options.language = options;
+		} else if (typeof options === 'object') {
+
+			//
+			// Merge the passed options with the default options
+			Object.assign(this.options, options);
 		}
 	}
 
 	/**
-	 * Resolves the component into a markdown string
-	 * @method resolve
-	 * @param  {Makedown} makedown A reference to the makedown instance
-	 * @return {string}            The resolved markdown string
+	 * Generates the markdown string of the component
+	 * @method toString
+	 * @return {string} The generated markdown string
 	 */
-	resolve (makedown) {
-		if (this.code.includes('\n') || this.language !== null) {
-			return `\n\`\`\`${ this.language !== null ? this.language : '' }\n${ this.code }\n\`\`\``;
+	toString() {
+		var renderBlock = this.code.includes('\n') || this.options.language !== null;
+		if (this.options.force !== null) {
+			if (this.options.force == 'inline') renderBlock = false;
+			else if (this.options.force == 'block') renderBlock = true;
+		}
+
+		if (renderBlock) {
+			return `\`\`\`${ this.options.language !== null ? this.options.language : '' }\n${ this.code }\n\`\`\``;
 		} else {
 			return `\`${ this.code }\``;
 		}

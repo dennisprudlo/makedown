@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const components = {
+const markdownComponents = {
 	headline:			require('./components/headline'),
 	paragraph:			require('./components/paragraph'),
 	bold:				require('./components/bold'),
@@ -33,12 +33,6 @@ class Makedown {
 			outputFile: null,
 
 			/**
-			 * Whether to automatically add spaced between the components or not
-			 * @type {Boolean}
-			 */
-			autoSpaces: true,
-
-			/**
 			 * Whether to print the generated file in the console
 			 * @type {Boolean}
 			 */
@@ -57,7 +51,7 @@ class Makedown {
 			Makedown.prototype[title] = (...content) => new delegate(...content);
 		} else {
 			Makedown.prototype[title] = (...content) => {
-				return { resolve: (makedown) => delegate(makedown, ...content) };
+				return { toString: () => delegate(...content) };
 			};
 		}
 	}
@@ -79,7 +73,11 @@ class Makedown {
 	 * @return {string}           The resolved markdown string
 	 */
 	resolve (components) {
-		const markdownComponents = components.map(component => {
+		return components.map(component => {
+
+			if (component instanceof markdownComponents.tableOfContents) {
+				return component.generate(this);
+			}
 
 			//
 			// Plain strings and numbers are resolved as they are
@@ -87,30 +85,14 @@ class Makedown {
 
 			//
 			// Objects with a resolve function will be resolved using this function
-			if (typeof component === 'object' && typeof component.resolve === 'function') {
-				return component.resolve(this);
+			if (typeof component === 'object' && typeof component.toString === 'function') {
+				return component.toString();
 			}
 
 			//
 			// Undefined components are skipped
 			return '';
-		});
-
-		var outputString = ''
-
-		var lastHadNewline = null;
-		markdownComponents.forEach(item => {
-
-			if (lastHadNewline != null && !lastHadNewline) {
-				outputString += this.options.autoSpaces ? ' ' : '';
-			}
-
-			outputString += item;
-
-			lastHadNewline = item.endsWith('\n');
-		});
-
-		return outputString;
+		}).join('');
 	}
 
 	/**
@@ -133,9 +115,7 @@ class Makedown {
 		//
 		// Write the contents
 		const content = this.resolve(this.components).trim();
-		fs.writeFileSync(filename, content, result => {
-			console.log(`${ filename } created.`);
-		});
+		fs.writeFileSync(filename, content);
 
 		if (this.options.printResults) {
 			console.log(content);
@@ -146,8 +126,8 @@ class Makedown {
 //
 // Extend the makedown class with the predefined/included markdown components
 const makedown = new Makedown();
-for (title in components) {
-	makedown.extend(title, components[title]);
+for (title in markdownComponents) {
+	makedown.extend(title, markdownComponents[title]);
 }
 
 module.exports = makedown;

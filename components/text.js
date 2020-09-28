@@ -3,23 +3,23 @@ class MarkdownNewlineComponent {
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {number}    lines The amount of newlines to create
+	 * @param  {string} content  The content to use for the plaintext component
 	 */
-	constructor (text) {
-		this.text = text
+	constructor (content) {
+		this.content = content;
 	}
 
 	/**
-	 * Resolves the component into a markdown string
-	 * @method resolve
-	 * @param  {Makedown} makedown A reference to the makedown instance
-	 * @return {string}            The resolved markdown string
+	 * Generates the markdown string of the component
+	 * @method toString
+	 * @return {string} The generated markdown string
 	 */
-	resolve (makedown) {
-		return this.text
+	toString () {
+		return this.content
 			.replace(/\*/g, '\\*')
 			.replace(/\_/g, '\\_')
 			.replace(/\>/g, '\\>')
+			.replace(/\~/g, '\\~')
 			.replace(/\`/g, '\\`')
 	}
 }

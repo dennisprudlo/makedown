@@ -23,7 +23,7 @@ class MarkdownTableOfContentsComponent {
 	 * @param  {Makedown} makedown A reference to the makedown instance
 	 * @return {string}            The resolved markdown string
 	 */
-	resolve (makedown) {
+	generate (makedown) {
 		var tableOfContentsFound	= this.options.collectFromBeginning;
 		var tableOfContents			= [];
 		var smallestIndentation		= 6;
@@ -36,19 +36,19 @@ class MarkdownTableOfContentsComponent {
 
 				//
 				// Skip if the headlines indentation level is not included in the TOC options
-				if (!this.options.include.includes(component.indentation)) return;
+				if (!this.options.include.includes(component.options.indentation)) return;
 
 				//
 				// Keep track of the smallest indentation
-				if (component.indentation < smallestIndentation) {
-					smallestIndentation = component.indentation;
+				if (component.options.indentation < smallestIndentation) {
+					smallestIndentation = component.options.indentation;
 				}
 
 				//
 				// Push the table of contents item to the array
 				tableOfContents.push({
-					indentation:	component.indentation,
-					content:		makedown.resolve(component.components).trim()
+					indentation:	component.options.indentation,
+					content:		component.content.trim()
 				});
 			}
 		});
@@ -71,7 +71,7 @@ class MarkdownTableOfContentsComponent {
 
 		//
 		// Return the table of contents with the passed title
-		return `\n\n## ${this.options.title}\n${ tocString }`;
+		return `## ${this.options.title}\n${ tocString }\n\n`;
 	}
 }
 

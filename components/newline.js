@@ -3,20 +3,28 @@ class MarkdownNewlineComponent {
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {number}    lines The amount of newlines to create
+	 * @param  {object|number} options The options for the newline command. If set to an integer its used as the lines option
 	 */
-	constructor (lines = 1) {
-		this.lines = lines
+	constructor (options = 1) {
+		this.options = {
+			lines: 1
+		};
+
+		if (typeof options === 'object') {
+
+			//
+			// Merge the passed options with the default options
+			Object.assign(this.options, options);
+		}
 	}
 
 	/**
-	 * Resolves the component into a markdown string
-	 * @method resolve
-	 * @param  {Makedown} makedown A reference to the makedown instance
-	 * @return {string}            The resolved markdown string
+	 * Generates the markdown string of the component
+	 * @method toString
+	 * @return {string} The generated markdown string
 	 */
-	resolve (makedown) {
-		return `\n`.repeat(this.lines);
+	toString () {
+		return `\n`.repeat(this.options.lines);
 	}
 }
 
