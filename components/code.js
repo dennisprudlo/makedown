@@ -49,7 +49,7 @@ class MarkdownCodeComponent {
 		}
 
 		if (renderBlock) {
-			return `\`\`\`${ this.options.language !== null ? this.options.language : '' }\n${ this.code }\n\`\`\``;
+			return `\`\`\`${ this.options.language !== null ? this.options.language : '' }\n${ this.code }\n\`\`\`\n`;
 		} else {
 			return `\`${ this.code }\``;
 		}
