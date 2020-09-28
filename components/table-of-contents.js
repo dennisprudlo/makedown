@@ -49,7 +49,8 @@ class MarkdownTableOfContentsComponent {
 				// Push the table of contents item to the array
 				tableOfContents.push({
 					indentation:	component.options.indentation,
-					content:		component.content.trim()
+					content:		component.content.trim(),
+					options:		component.options
 				});
 			}
 		});
@@ -66,8 +67,8 @@ class MarkdownTableOfContentsComponent {
 		//
 		// Create the table of contents string
 		const tocString = tableOfContents.map(entry => {
-			const href = `#${ entry.content.toLowerCase().replace(/\ /g, '-') }`
-			return `${ ' '.repeat((entry.indentation - 1) * prefix.length) }${ prefix }[${ entry.content }](${ href })`;
+			const href = `#${ entry.options.plainText.toLowerCase().replace(/\ /g, '-') }`
+			return `${ ' '.repeat((entry.indentation - 1) * prefix.length) }${ prefix }[${ entry.options.plainText }](${ href })`;
 		}).join('\n');
 
 		//

@@ -9,7 +9,8 @@ class MarkdownHeadlineComponent {
 	constructor (content, options) {
 		this.content = content;
 		this.options = {
-			indentation: 1
+			indentation:	1,
+			plainText:		content
 		};
 
 		if (!isNaN(options) && Number.isInteger(options)) {
