@@ -78,7 +78,7 @@ class MarkdownTableOfContentsComponent {
 					.replace(/\ /g, '-');
 			}
 
-			const indentation	= ' '.repeat((entry.indentation - 1) * prefix.length);
+			const indentation	= ' '.repeat((entry.options.indentation - 1) * prefix.length);
 			const title			= entry.options.tocTitle !== null ? entry.options.tocTitle : entry.content;
 
 			return `${ indentation }${ prefix }[${ title }](#${ hrefId })`;
