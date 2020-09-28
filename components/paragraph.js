@@ -7,7 +7,7 @@ class MarkdownParagraphComponent {
 	 * @param  {object} options  The paragraphs options
 	 */
 	constructor (content, options = {}) {
-		this.content = content.trim().replace(/^(\s)+/gm, '');
+		this.content = content.toString().trim().replace(/^(\s)+/gm, '');
 		this.options = {
 			spaceBefore:	false,
 			spaceAfter:		true,

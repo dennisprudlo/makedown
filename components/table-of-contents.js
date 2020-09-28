@@ -48,9 +48,8 @@ class MarkdownTableOfContentsComponent {
 				//
 				// Push the table of contents item to the array
 				tableOfContents.push({
-					indentation:	component.options.indentation,
-					content:		component.content.trim(),
-					options:		component.options
+					content: component.content,
+					options: component.options
 				});
 			}
 		});
@@ -67,8 +66,22 @@ class MarkdownTableOfContentsComponent {
 		//
 		// Create the table of contents string
 		const tocString = tableOfContents.map(entry => {
-			const href = `#${ entry.options.plainText.toLowerCase().replace(/\ /g, '-') }`
-			return `${ ' '.repeat((entry.indentation - 1) * prefix.length) }${ prefix }[${ entry.options.plainText }](${ href })`;
+
+			//
+			// Determine the right ID to link to
+			// Use the given tocHref from the options. If not set generate a slug from the title
+			var hrefId = entry.options.tocHref;
+			if (typeof hrefId !== 'string') {
+				hrefId =  entry.content.toString()
+					.toLowerCase()
+					.replace(/[^a-zA-Z0-9\ ]/g, '')
+					.replace(/\ /g, '-');
+			}
+
+			const indentation	= ' '.repeat((entry.indentation - 1) * prefix.length);
+			const title			= entry.options.tocTitle !== null ? entry.options.tocTitle : entry.content;
+
+			return `${ indentation }${ prefix }[${ title }](#${ hrefId })`;
 		}).join('\n');
 
 		//

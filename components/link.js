@@ -3,12 +3,12 @@ class MarkdownLinkComponent {
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {string}        link    The url to link to
+	 * @param  {string}        url     The url to link to
 	 * @param  {object|string} options The options for the link. If set to a string its used as the label
 	 */
-	constructor (link, options = {}) {
-		this.link = link;
-		this.options = {
+	constructor (url, options = {}) {
+		this.url		= url;
+		this.options	= {
 			label: null
 		};
 
@@ -31,7 +31,7 @@ class MarkdownLinkComponent {
 	 * @return {string} The generated markdown string
 	 */
 	toString () {
-		return `[${ this.options.label !== null ? this.options.label : this.link }](${ this.link })`;
+		return `[${ this.options.label !== null ? this.options.label : this.url }](${ this.url })`;
 	}
 }
 

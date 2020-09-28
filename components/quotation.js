@@ -6,7 +6,7 @@ class MarkdownQuotationComponent {
 	 * @param  {string} content  The content to use for the quoted text
 	 */
 	constructor (content) {
-		this.content = content.trim();
+		this.content = content.toString().trim().replace(/\n/g, '\n> ');
 	}
 
 	/**
@@ -15,7 +15,7 @@ class MarkdownQuotationComponent {
 	 * @return {string} The generated markdown string
 	 */
 	toString () {
-		return `> ${ this.content }`;
+		return `> ${ this.content }\n`;
 	}
 }
 

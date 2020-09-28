@@ -10,7 +10,8 @@ class MarkdownHeadlineComponent {
 		this.content = content;
 		this.options = {
 			indentation:	1,
-			plainText:		content
+			tocTitle:		null,
+			tocHref:		null
 		};
 
 		if (!isNaN(options) && Number.isInteger(options)) {

@@ -1,4 +1,4 @@
-class MarkdownNewlineComponent {
+class MarkdownTextComponent {
 
 	/**
 	 * Constructs the markdown component
@@ -24,4 +24,4 @@ class MarkdownNewlineComponent {
 	}
 }
 
-module.exports = MarkdownNewlineComponent;
+module.exports = MarkdownTextComponent;
