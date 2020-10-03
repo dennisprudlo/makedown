@@ -2,7 +2,7 @@
 	"name": "makedown",
 	"version": "1.0.0",
 	"description": "Makedown is a simple automatic markdown file generator.",
-	"main": "makedown.js",
+	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

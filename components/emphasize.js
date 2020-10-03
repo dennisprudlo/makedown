@@ -1,12 +1,12 @@
-class MarkdownQuotationComponent {
+class MarkdownEmphasizeComponent {
 
 	/**
 	 * Constructs the markdown component
 	 * @method constructor
-	 * @param  {string} content  The content to use for the quoted text
+	 * @param  {string} content  The content to use for the emphasis text
 	 */
 	constructor (content) {
-		this.content = content.toString().trim().replace(/\n/g, '\n> ');
+		this.content = content;
 	}
 
 	/**
@@ -15,8 +15,8 @@ class MarkdownQuotationComponent {
 	 * @return {string} The generated markdown string
 	 */
 	toString () {
-		return `> ${ this.content }\n`;
+		return `***${ this.content }***`;
 	}
 }
 
-module.exports = MarkdownQuotationComponent;
+module.exports = MarkdownEmphasizeComponent;
